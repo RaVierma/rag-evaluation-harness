@@ -939,9 +939,10 @@ The project is intentionally being built incrementally.
 
 ---
 
-# Engineering Philosophy
+# Engineering Approach
 
-The project follows a simple production engineering loop:
+RAG improvements are treated as measurable experiments rather than
+single-metric optimizations.
 
 ```text
 Measure
@@ -959,65 +960,33 @@ Regression Check
 Release
 ```
 
-The goal is not to optimize a single metric.
-
-The goal is to make **evidence-based engineering decisions**.
-
-A useful mental model is:
+The core investigation model is:
 
 > **Observation → Hypothesis → Investigation → Root Cause → Fix → Trade-off → Decision**
 
-For example:
-
-```text
-Observation:
-Retrieval recall increased.
-
-Hypothesis:
-The new retriever finds more relevant evidence.
-
-Investigation:
-Check context precision and final context composition.
-
-Root Cause:
-Additional retrieved documents pushed useful evidence
-out of the final context window.
-
-Fix:
-Improve reranking and context selection.
-
-Trade-off:
-Higher retrieval recall may require stricter context filtering.
-
-Decision:
-Keep the retriever change only if overall quality remains
-within the release thresholds.
-```
-
----
+A change is considered successful only when it improves the required
+quality metrics without violating latency, cost, or regression constraints.
 
 # Portfolio Value
 
-This project demonstrates more than knowledge of RAG metrics.
+This project demonstrates production-oriented RAG engineering beyond retrieval and prompt engineering.
 
-It demonstrates the ability to design an evaluation system around:
+It shows how to:
 
-* Measurable quality
-* Structured evaluation contracts
-* Retrieval analysis
-* LLM evaluation
-* Experiment comparison
-* Regression detection
-* Latency/cost trade-offs
-* Failure handling
-* Testability
-* Production release decisions
+- Define measurable RAG quality criteria
+- Build deterministic retrieval and context metrics
+- Evaluate LLM-generated answers with structured judge outputs
+- Compare RAG system versions using the same evaluation dataset
+- Detect quality and operational regressions
+- Apply release thresholds based on quality, latency, and cost
+- Investigate failures across retrieval, reranking, context construction, and generation
+- Separate evaluation infrastructure from the RAG implementation
 
 The central engineering question is:
 
-> **"How do we know that our RAG system actually got better?"**
+> **How do we know that a RAG system actually got better?**
 
-This project provides the infrastructure to answer that question with data rather than intuition.
+The answer should come from reproducible evaluation and measurable trade-offs—not intuition.
 
 ---
 
