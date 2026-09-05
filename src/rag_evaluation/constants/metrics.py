@@ -1,0 +1,15 @@
+COMPARABLE_METRICS = [
+    "retrieval_recall",
+    "retrieval_precision",
+    "retrieval_mrr",
+    "context_recall",
+    "context_precision",
+    "groundedness",
+    "correctness",
+    "relevance",
+    "avg_latency_ms",
+    "p95_latency_ms",
+    "avg_input_tokens",
+    "avg_output_tokens",
+    "avg_cost_usd",
+]

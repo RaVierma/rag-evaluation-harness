@@ -1,0 +1,13 @@
+Secrets and Credential Protection Policy
+
+Policy Version: 2026.1
+
+Passwords, API keys, access tokens, private keys, and other credentials must be treated as confidential information.
+
+Credentials must not be disclosed through chat systems, application responses, logs, source code, or other unauthorized channels.
+
+Production credentials must be stored using approved secret-management mechanisms.
+
+Employees must never request, expose, or share administrator passwords through normal communication channels.
+
+Suspected credential exposure must be reported through the company's security incident process.

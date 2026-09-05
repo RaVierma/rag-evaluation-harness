@@ -1,0 +1,13 @@
+Production Database Access Policy
+
+Policy Version: 2026.1
+
+Production database access requires an approved access request.
+
+The request must include a documented business justification and identify the systems and level of access required.
+
+Manager approval is required before access can be provisioned.
+
+Security approval is also required for production database access.
+
+Production access must follow the principle of least privilege and should be removed when the business requirement ends.

@@ -1,0 +1,13 @@
+Production Deployment Policy
+
+Policy Version: 2026.1
+
+Production deployments must use an approved CI/CD pipeline.
+
+Before deployment, changes must pass the required automated tests and code review process.
+
+Production releases must include appropriate security and vulnerability checks.
+
+Emergency changes may follow the emergency change process, but the required post-deployment review and documentation must still be completed.
+
+Only authorized personnel may approve or execute production deployments.

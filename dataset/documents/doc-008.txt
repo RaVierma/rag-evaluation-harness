@@ -1,0 +1,11 @@
+Production Security Logging Policy
+
+Policy Version: 2026.1
+
+Production security logs must be retained for 180 days.
+
+Logs must be protected against unauthorized modification and access.
+
+Security-relevant events should include authentication attempts, authorization failures, privileged actions, and other events required by the applicable security controls.
+
+Access to production logs is restricted to authorized personnel with a legitimate business requirement.
