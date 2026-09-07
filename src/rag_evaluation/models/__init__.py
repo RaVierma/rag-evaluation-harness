@@ -1,4 +1,5 @@
 from .cases import EvaluationCase, EvaluationCaseCategory
+from .chunks import Chunk, ChunkMetaData
 from .decisions import (
     EvaluationDecision,
     EvaluationThresholds,
@@ -8,6 +9,7 @@ from .decisions import (
     RegressionMetric,
     RegressionThresholds,
 )
+from .documents import Document, MetaData, Section
 from .generation import (
     Evidence,
     GenerationEvaluation,
@@ -27,6 +29,9 @@ from .reports import (
 __all__ = [
     "CategoryEvaluation",
     "CategoryEvaluationReport",
+    "Chunk",
+    "ChunkMetaData",
+    "Document",
     "EvaluationCase",
     "EvaluationCaseCategory",
     "EvaluationCaseResult",
@@ -38,6 +43,7 @@ __all__ = [
     "GenerationEvaluation",
     "LLMProviderErrorType",
     "LLMProviderResult",
+    "MetaData",
     "Metric",
     "MetricComparison",
     "MetricDirection",
@@ -46,5 +52,6 @@ __all__ = [
     "RegressionMetric",
     "RegressionThresholds",
     "Score",
+    "Section",
     "SystemOutput",
 ]
