@@ -16,3 +16,15 @@ class Chunk(BaseModel):
     content: NonEmptyString
     position: Annotated[int, Field(ge=0, strict=True)]
     metadata: ChunkMetaData
+
+
+class EmbeddedChunk(BaseModel):
+    chunk_id: NonEmptyString
+    document_id: NonEmptyString
+    content: NonEmptyString
+    embedding: tuple[float, ...]
+
+
+class RetrievedChunk(BaseModel):
+    chunk: EmbeddedChunk
+    score: float

@@ -1,5 +1,5 @@
 from .cases import EvaluationCase, EvaluationCaseCategory
-from .chunks import Chunk, ChunkMetaData
+from .chunks import Chunk, ChunkMetaData, EmbeddedChunk, RetrievedChunk
 from .decisions import (
     EvaluationDecision,
     EvaluationThresholds,
@@ -31,6 +31,8 @@ __all__ = [
     "CategoryEvaluationReport",
     "Chunk",
     "ChunkMetaData",
+    "EmbeddedChunk",
+    "RetrievedChunk",
     "Document",
     "EvaluationCase",
     "EvaluationCaseCategory",
