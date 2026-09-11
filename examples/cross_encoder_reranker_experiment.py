@@ -5,7 +5,8 @@ from rag_evaluation.dataset import TextDocumentLoader
 from rag_evaluation.embeddings.providers.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.embeddings.service import EmbeddingService
 from rag_evaluation.models.chunks import Chunk, EmbeddedChunk
-from rag_evaluation.retriever import InMemoryRetriever
+from rag_evaluation.reranking import CrossEncoderReranker
+from rag_evaluation.retriever import BM25Retriever, HybridRetriever, InMemoryRetriever
 
 DOCUMENTS_PATH = Path("dataset/documents")
 
@@ -44,11 +45,16 @@ def embed_chunks(
     return embedding_service.embed_chunks(chunks)
 
 
-def run_retrieval_experiment(
+def run_reranker_experiment(
     provider: OllamaEmbeddingProvider,
     embedded_chunks: list[EmbeddedChunk],
 ) -> None:
-    retriever = InMemoryRetriever(embedded_chunks)
+    dense_retriever = InMemoryRetriever(embedded_chunks)
+    bm25_retriever = BM25Retriever(embedded_chunks)
+
+    hybrid_retriever = HybridRetriever(dense_retriever, bm25_retriever)
+
+    reranker = CrossEncoderReranker(model_name="cross-encoder/ms-marco-MiniLM-L-6-v2")
 
     for query in QUERIES:
         print("=" * 80)
@@ -57,16 +63,54 @@ def run_retrieval_experiment(
 
         query_embedding = provider.embed(query)
 
-        results = retriever.retrieve(
+        hybrid_candidates = hybrid_retriever.retrieve(
+            query=query,
             query_embedding=query_embedding,
-            candidate_k=5,
+            candidate_k=20,
+            pool_k=20,
         )
+        # print(
+        #     "Is descending:",
+        #     all(
+        #         hybrid_candidates[i].rrf_score
+        #         >= hybrid_candidates[i + 1].rrf_score
+        #         for i in range(len(hybrid_candidates) - 1)
+        #     )
+        # )
 
-        for rank, result in enumerate(results, start=1):
+        # print(
+        #     "First:",
+        #     hybrid_candidates[0].rrf_score,
+        #     hybrid_candidates[0].chunk.chunk_id,
+        # )
+
+        # print(
+        #     "Last:",
+        #     hybrid_candidates[-1].rrf_score,
+        #     hybrid_candidates[-1].chunk.chunk_id,
+        # )
+
+        # print("=== RRF POOL ===")
+
+        # for rank, candidate in enumerate(hybrid_candidates, 1):
+        #     print(
+        #         rank,
+        #         candidate.chunk.chunk_id,
+        #         candidate.rrf_score,
+        #     )
+
+        reranker_result = reranker.rerank(query, hybrid_candidates, top_k=5)
+
+        for rank, result in enumerate(reranker_result, start=1):
             print(f"\nRank: {rank}")
-            print(f"Chunk: {result.chunk.chunk_id}")
-            print(f"Score: {result.score:.4f}")
-            print(f"Content:\n{result.chunk.content}")
+            print(f"Chunk: {result.chunk.chunk.chunk_id}")
+            print(f"Dense score: {(result.chunk.dense_score or 0.0):.4f}")
+            print(f"BM25 score: {(result.chunk.bm25_score or 0.0):.4f}")
+            print(f"Dense rank: {result.chunk.dense_rank}")
+            print(f"BM25 rank: {result.chunk.bm25_rank}")
+            print(f"RRF score: {result.chunk.rrf_score:.4f}")
+            print(f"ReRank score: {result.rerank_score:.4f}")
+            print(f"Content:\n{result.chunk.chunk.content}")
 
 
 def main() -> None:
@@ -75,7 +119,7 @@ def main() -> None:
 
     print(f"Documents chunked: {len(chunks)}")
 
-    # 2. Real semantic embedding provider
+    # 2. Dummy embedding provider
     embedding_provider = OllamaEmbeddingProvider(
         model_name="nomic-embed-text:latest",
         dimension=768,
@@ -90,7 +134,7 @@ def main() -> None:
     print(f"Chunks embedded: {len(embedded_chunks)}")
 
     # 4. Run retrieval experiment
-    run_retrieval_experiment(
+    run_reranker_experiment(
         provider=embedding_provider,
         embedded_chunks=embedded_chunks,
     )

@@ -1,7 +1,5 @@
-import pytest
-
 from rag_evaluation.models.chunks import EmbeddedChunk
-from rag_evaluation.retrieval.retriever import InMemoryRetriever
+from rag_evaluation.retriever import InMemoryRetriever
 
 
 def test_inmemory_retrieval_for_valid_data():

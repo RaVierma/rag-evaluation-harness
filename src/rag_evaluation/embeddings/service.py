@@ -22,3 +22,9 @@ class EmbeddingService:
             )
             for chunk, embedding in zip(chunks, embedding)
         ]
+
+    def embed_query(self, query: str) -> tuple[float, ...]:
+        if not query.strip():
+            raise ValueError("query must not be empty")
+
+        return self._embedding_provider.embed(query)

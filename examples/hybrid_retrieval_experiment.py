@@ -2,10 +2,10 @@ from pathlib import Path
 
 from rag_evaluation.chunking import TextChunker
 from rag_evaluation.dataset import TextDocumentLoader
-from rag_evaluation.embeddings.providers.dummy import DummyEmbeddingProvider
+from rag_evaluation.embeddings.providers.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.embeddings.service import EmbeddingService
 from rag_evaluation.models.chunks import Chunk, EmbeddedChunk
-from rag_evaluation.retriever import InMemoryRetriever
+from rag_evaluation.retriever import BM25Retriever, HybridRetriever, InMemoryRetriever
 
 DOCUMENTS_PATH = Path("dataset/documents")
 
@@ -37,7 +37,7 @@ def chunk_documents() -> list[Chunk]:
 
 def embed_chunks(
     chunks: list[Chunk],
-    embedding_provider: DummyEmbeddingProvider,
+    embedding_provider: OllamaEmbeddingProvider,
 ) -> list[EmbeddedChunk]:
     embedding_service = EmbeddingService(embedding_provider)
 
@@ -45,10 +45,13 @@ def embed_chunks(
 
 
 def run_retrieval_experiment(
-    provider: DummyEmbeddingProvider,
+    provider: OllamaEmbeddingProvider,
     embedded_chunks: list[EmbeddedChunk],
 ) -> None:
-    retriever = InMemoryRetriever(embedded_chunks)
+    dense_retriever = InMemoryRetriever(embedded_chunks)
+    bm25_retriever = BM25Retriever(embedded_chunks)
+
+    hybrid_retriever = HybridRetriever(dense_retriever, bm25_retriever)
 
     for query in QUERIES:
         print("=" * 80)
@@ -57,15 +60,21 @@ def run_retrieval_experiment(
 
         query_embedding = provider.embed(query)
 
-        results = retriever.retrieve(
+        results = hybrid_retriever.retrieve(
+            query=query,
             query_embedding=query_embedding,
             candidate_k=5,
+            pool_k=5,
         )
 
         for rank, result in enumerate(results, start=1):
             print(f"\nRank: {rank}")
             print(f"Chunk: {result.chunk.chunk_id}")
-            print(f"Score: {result.score:.4f}")
+            print(f"Dense score: {(result.dense_score or 0.0):.4f}")
+            print(f"BM25 score: {(result.bm25_score or 0.0):.4f}")
+            print(f"Dense rank: {result.dense_rank}")
+            print(f"BM25 rank: {result.bm25_rank}")
+            print(f"RRF score: {result.rrf_score:.4f}")
             print(f"Content:\n{result.chunk.content}")
 
 
@@ -76,7 +85,10 @@ def main() -> None:
     print(f"Documents chunked: {len(chunks)}")
 
     # 2. Dummy embedding provider
-    embedding_provider = DummyEmbeddingProvider()
+    embedding_provider = OllamaEmbeddingProvider(
+        model_name="nomic-embed-text:latest",
+        dimension=768,
+    )
 
     # 3. Embed document chunks
     embedded_chunks = embed_chunks(

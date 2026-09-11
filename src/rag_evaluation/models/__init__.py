@@ -1,5 +1,13 @@
-from .cases import EvaluationCase, EvaluationCaseCategory
-from .chunks import Chunk, ChunkMetaData, EmbeddedChunk, RetrievedChunk
+from .cases import EvaluationCase, EvaluationCaseCategory, RelevanceJudgment
+from .chunks import (
+    Chunk,
+    ChunkMetaData,
+    EmbeddedChunk,
+    HybridRetrievedChunk,
+    RerankedChunk,
+    RetrievalOutput,
+    RetrievedChunk,
+)
 from .decisions import (
     EvaluationDecision,
     EvaluationThresholds,
@@ -31,9 +39,8 @@ __all__ = [
     "CategoryEvaluationReport",
     "Chunk",
     "ChunkMetaData",
-    "EmbeddedChunk",
-    "RetrievedChunk",
     "Document",
+    "EmbeddedChunk",
     "EvaluationCase",
     "EvaluationCaseCategory",
     "EvaluationCaseResult",
@@ -43,6 +50,7 @@ __all__ = [
     "EvaluationThresholds",
     "Evidence",
     "GenerationEvaluation",
+    "HybridRetrievedChunk",
     "LLMProviderErrorType",
     "LLMProviderResult",
     "MetaData",
@@ -53,6 +61,10 @@ __all__ = [
     "RegressionDecision",
     "RegressionMetric",
     "RegressionThresholds",
+    "RelevanceJudgment",
+    "RerankedChunk",
+    "RetrievalOutput",
+    "RetrievedChunk",
     "Score",
     "Section",
     "SystemOutput",

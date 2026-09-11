@@ -28,3 +28,27 @@ class EmbeddedChunk(BaseModel):
 class RetrievedChunk(BaseModel):
     chunk: EmbeddedChunk
     score: float
+
+
+class HybridRetrievedChunk(BaseModel):
+    chunk: EmbeddedChunk
+
+    dense_score: float | None
+    bm25_score: float | None
+
+    dense_rank: int | None
+    bm25_rank: int | None
+
+    rrf_score: float
+
+
+class RerankedChunk(BaseModel):
+    chunk: HybridRetrievedChunk
+    rerank_score: float
+
+
+class RetrievalOutput(BaseModel):
+    query: str
+    results: list[RerankedChunk]
+    candidate_k: int = Field(gt=0)
+    top_k: int = Field(gt=0)

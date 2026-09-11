@@ -7,7 +7,8 @@ def recall_at_k(
         return 0.0
 
     relevant = set(relevant_document_ids)
-    retrieved = retrieved_document_ids[:k]
+    unique_retrieved = list(set(retrieved_document_ids))
+    retrieved = unique_retrieved[:k]
 
     relevant_retrieved = sum(doc_id in relevant for doc_id in retrieved)
 

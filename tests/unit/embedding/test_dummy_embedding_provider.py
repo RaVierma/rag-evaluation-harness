@@ -1,4 +1,5 @@
 import pytest
+
 from rag_evaluation.embeddings import DummyEmbeddingProvider
 
 embedding_provider = DummyEmbeddingProvider()
@@ -21,7 +22,7 @@ def test_dummy_embedding_provider_for_batch_text():
     embed_texts = embedding_provider.embed_batch(texts)
 
     assert len(embed_texts) == 2
-    assert all([len(emb) == 768 for emb in embed_texts])
+    assert all(len(emb) == 768 for emb in embed_texts)
 
     assert embed_texts[0] != embed_texts[1]
 

@@ -1,4 +1,3 @@
-import pytest
 from rag_evaluation.embeddings import DummyEmbeddingProvider, EmbeddingService
 from rag_evaluation.models.chunks import Chunk
 

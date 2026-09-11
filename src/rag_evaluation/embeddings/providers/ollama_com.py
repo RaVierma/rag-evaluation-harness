@@ -1,5 +1,3 @@
-import os
-
 from ollama import Client
 
 from rag_evaluation.embeddings import EmbeddingProvider

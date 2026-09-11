@@ -292,3 +292,48 @@ Decision
 The purpose of this baseline is not simply to demonstrate that one embedding provider works better.
 
 It establishes a measurable reference point so future retrieval improvements can be evaluated objectively.
+
+## Day 8 Evaluation Baseline
+
+Evaluation configuration:
+
+- Corpus: 11 documents
+- Chunks: 27
+- Evaluation cases: 10
+- Candidate K: 20
+- Final K: 5
+- Retrieval: Dense + BM25
+- Fusion: RRF
+- Reranking: CrossEncoder
+
+Overall results:
+
+- Recall@5: 1.000
+- RR@5: 1.000
+- NDCG@5: 0.938
+
+Category-level findings:
+
+- Simple: 1.000
+- Difficult: 1.000
+- Ambiguous: 0.855
+- Multi-document: 0.834
+- Adversarial: 0.834
+
+Key finding:
+
+The retrieval pipeline successfully retrieves the relevant
+evidence for all evaluated cases. However, NDCG shows that
+the strongest evidence is not always ranked first.
+
+The most notable failure occurs for authority-sensitive
+queries where the system may rank evidence about requesting
+an exception above evidence explicitly describing who can
+approve the exception.
+
+Engineering decision:
+
+Do not replace the retrieval or reranking model based on
+this small evaluation set. Continue collecting targeted
+evaluation cases and investigate ranking behavior before
+making architectural changes.

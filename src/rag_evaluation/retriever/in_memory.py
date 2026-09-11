@@ -1,9 +1,9 @@
-from rag_evaluation.models import EmbeddedChunk
-from rag_evaluation.models import RetrievedChunk
-from rag_evaluation.retrieval.similarity import cosine_similarity
+from rag_evaluation.models import EmbeddedChunk, RetrievedChunk
+from rag_evaluation.retriever import Retriever
+from rag_evaluation.utils.helper import cosine_similarity
 
 
-class InMemoryRetriever:
+class InMemoryRetriever(Retriever):
     def __init__(
         self,
         embedded_chunks: list[EmbeddedChunk],
@@ -13,13 +13,13 @@ class InMemoryRetriever:
     def retrieve(
         self,
         query_embedding: tuple[float, ...],
-        top_k: int,
+        candidate_k: int,
     ) -> list[RetrievedChunk]:
 
         if not query_embedding:
             raise ValueError("Not valid query embedding")
 
-        if top_k <= 0:
+        if candidate_k <= 0:
             raise ValueError("tok k must be greater that zero.")
 
         if self._embedded_chunks:
@@ -34,4 +34,6 @@ class InMemoryRetriever:
             score = cosine_similarity(query_embedding, embed_chunk.embedding)
             retrieve_chunks.append(RetrievedChunk(chunk=embed_chunk, score=score))
 
-        return sorted(retrieve_chunks, key=lambda x: x.score, reverse=True)[:top_k]
+        return sorted(retrieve_chunks, key=lambda x: x.score, reverse=True)[
+            :candidate_k
+        ]
