@@ -1,3 +1,5 @@
+from enum import Enum
+
 from pydantic import BaseModel
 
 from rag_evaluation.models import (
@@ -6,6 +8,13 @@ from rag_evaluation.models import (
     GenerationEvaluation,
     SystemOutput,
 )
+
+
+class RAGDiagnosis(str, Enum):
+    PASS = "pass"
+    GENERATION_JUDGE_UNCERTAIN = "generation_judge_uncertain"
+    RETRIEVAL_FAILURE = "retrieval_failure"
+    LUCKY = "lucky"
 
 
 class EvaluationCaseResult(BaseModel):
@@ -23,6 +32,8 @@ class EvaluationCaseResult(BaseModel):
 
     # Generation
     generation: GenerationEvaluation
+
+    diagnosis: RAGDiagnosis
 
 
 class EvaluationReport(BaseModel):

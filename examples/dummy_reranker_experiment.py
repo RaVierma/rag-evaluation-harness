@@ -2,9 +2,9 @@ from pathlib import Path
 
 from rag_evaluation.chunking import TextChunker
 from rag_evaluation.dataset import TextDocumentLoader
-from rag_evaluation.embeddings.providers.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.embeddings.service import EmbeddingService
 from rag_evaluation.models.chunks import Chunk, EmbeddedChunk
+from rag_evaluation.providers.embedding.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.reranking import DummyReranker
 from rag_evaluation.retriever import BM25Retriever, HybridRetriever, InMemoryRetriever
 

@@ -32,6 +32,10 @@ class LLMProviderResult(BaseModel):
     error: str | None = None
     error_type: LLMProviderErrorType | None = None
     raw_response: object | None = None
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    cost_usd: float | None = None
 
     @model_validator(mode="after")
     def validate_model(self):

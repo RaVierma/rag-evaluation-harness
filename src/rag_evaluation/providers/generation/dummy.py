@@ -1,14 +1,18 @@
 import json
 
+from pydantic import BaseModel
+
 from rag_evaluation.models import LLMProviderErrorType, LLMProviderResult
-from rag_evaluation.providers.base import LLMProvider
+from rag_evaluation.providers.generation.base import LLMProvider
 
 
 class DummyLLMProvider(LLMProvider):
     def __init__(self, response: str | None = None):
         self.response = response
 
-    def call(self, prompt: str) -> LLMProviderResult:
+    def call(
+        self, prompt: str, response_schema: type[BaseModel] | None = None
+    ) -> LLMProviderResult:
         response = (
             json.dumps(
                 {

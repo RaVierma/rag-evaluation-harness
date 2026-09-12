@@ -1,3 +1,4 @@
+from rag_evaluation.evaluation.diagnosis import diagnose
 from rag_evaluation.judges.base import Judge
 from rag_evaluation.metrics.context import context_precision, context_recall
 from rag_evaluation.metrics.retrieval import (
@@ -42,6 +43,13 @@ class EvaluationRunner:
             system_output.generated_answer,
         )
 
+        diagnosis = diagnose(
+            retrieval_recall=recall,
+            groundedness=generation.groundedness.score,
+            correctness=generation.correctness.score,
+            relevance=generation.relevance.score,
+        )
+
         return EvaluationCaseResult(
             case_id=case.id,
             system_output=system_output,
@@ -51,4 +59,5 @@ class EvaluationRunner:
             context_recall=ctx_recall,
             context_precision=ctx_precision,
             generation=generation,
+            diagnosis=diagnosis,
         )

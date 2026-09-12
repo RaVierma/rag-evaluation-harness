@@ -4,20 +4,20 @@ import pytest
 
 from rag_evaluation.evaluation.report import EvaluationReportBuilder
 from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges.dummy import DummyJudge
+from rag_evaluation.judges.llm import LLMJudge
 from rag_evaluation.models import (
     EvaluationCase,
     EvaluationCaseCategory,
     SystemOutput,
 )
-from rag_evaluation.providers.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation.dummy import DummyLLMProvider
 
 
 @pytest.fixture
 def eval_case_results():
     eval_results = []
     provider = DummyLLMProvider()
-    judge = DummyJudge(provider)
+    judge = LLMJudge(provider)
     eval_runner = EvaluationRunner(judge)
 
     for i in range(1, 6):

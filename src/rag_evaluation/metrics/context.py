@@ -7,9 +7,9 @@ def context_recall(
 
     relevant = set(relevant_context_ids)
 
-    relevant_context_count = sum(context_id in relevant for context_id in context_ids)
+    context = set(context_ids)
 
-    return relevant_context_count / len(relevant)
+    return len(relevant & context) / len(relevant)
 
 
 def context_precision(
@@ -21,6 +21,6 @@ def context_precision(
 
     relevant = set(relevant_context_ids)
 
-    relevant_context_count = sum(context_id in relevant for context_id in context_ids)
+    context = set(context_ids)
 
-    return relevant_context_count / len(context_ids)
+    return len(relevant & context) / len(context)

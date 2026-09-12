@@ -4,11 +4,11 @@ import pytest
 
 from rag_evaluation.evaluation.category_report import CategoryEvaluationBuilder
 from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges.dummy import DummyJudge
+from rag_evaluation.judges.llm import LLMJudge
 from rag_evaluation.models import EvaluationCase
 from rag_evaluation.models.cases import EvaluationCaseCategory
 from rag_evaluation.models.outputs import SystemOutput
-from rag_evaluation.providers.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation.dummy import DummyLLMProvider
 
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def eval_case_and_results():
     cases = []
     eval_results = []
     provider = DummyLLMProvider()
-    judge = DummyJudge(provider)
+    judge = LLMJudge(provider)
     eval_runner = EvaluationRunner(judge)
 
     for i in range(1, 21):

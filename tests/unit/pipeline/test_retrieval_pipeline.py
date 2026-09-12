@@ -7,7 +7,7 @@ from rag_evaluation.models.chunks import (
     HybridRetrievedChunk,
     RerankedChunk,
 )
-from rag_evaluation.pipeline.retrieval_pipeline import RetrievalPipeline
+from rag_evaluation.pipelines.retrieval_pipeline import RetrievalPipeline
 
 
 def make_reranked_chunk(chunk_id: str) -> RerankedChunk:

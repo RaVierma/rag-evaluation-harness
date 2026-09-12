@@ -5,12 +5,12 @@ from typing import Any
 
 from rag_evaluation.chunking.text_chunker import TextChunker
 from rag_evaluation.dataset.loader.text_document_loader import TextDocumentLoader
-from rag_evaluation.embeddings.providers.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.embeddings.service import EmbeddingService
 from rag_evaluation.evaluation.retrieval import evaluate_retrieval
 from rag_evaluation.models.cases import EvaluationCase
 from rag_evaluation.models.chunks import Chunk, EmbeddedChunk
-from rag_evaluation.pipeline.retrieval_pipeline import RetrievalPipeline
+from rag_evaluation.pipelines.retrieval_pipeline import RetrievalPipeline
+from rag_evaluation.providers.embedding.ollama_com import OllamaEmbeddingProvider
 from rag_evaluation.reranking.cross_encoder import CrossEncoderReranker
 from rag_evaluation.retriever.bm25 import BM25Retriever
 from rag_evaluation.retriever.hybrid import HybridRetriever

@@ -1,17 +1,17 @@
 import pytest
 
 from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges.dummy import DummyJudge
+from rag_evaluation.judges.llm import LLMJudge
 from rag_evaluation.models import (
     EvaluationCase,
     EvaluationCaseCategory,
     GenerationEvaluation,
     SystemOutput,
 )
-from rag_evaluation.providers.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation.dummy import DummyLLMProvider
 
 provider = DummyLLMProvider()
-judge = DummyJudge(provider)
+judge = LLMJudge(provider)
 eval_runner = EvaluationRunner(judge)
 
 

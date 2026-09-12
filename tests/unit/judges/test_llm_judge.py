@@ -1,13 +1,13 @@
 import pytest
 
-from rag_evaluation.judges.dummy import DummyJudge
+from rag_evaluation.judges.llm import LLMJudge
 from rag_evaluation.models import GenerationEvaluation
-from rag_evaluation.providers.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation.dummy import DummyLLMProvider
 
 
 def test_dummy_judge_for_success():
     provider = DummyLLMProvider()
-    dummy_judge = DummyJudge(provider)
+    dummy_judge = LLMJudge(provider)
     result = dummy_judge.evaluate(
         question="What",
         context="this is context",
@@ -25,7 +25,7 @@ def test_dummy_judge_for_success():
 def test_dummy_judge_for_empty_question_expected_answer_generated_answer():
     with pytest.raises(ValueError):
         provider = DummyLLMProvider()
-        dummy_judge = DummyJudge(provider)
+        dummy_judge = LLMJudge(provider)
         dummy_judge.evaluate(
             question="",
             context="this is context",
@@ -37,7 +37,7 @@ def test_dummy_judge_for_empty_question_expected_answer_generated_answer():
 def test_dummy_judge_for_provider_failure_invalid_json():
     with pytest.raises(ValueError, match="Judge raises controlled JSON error"):
         provider = DummyLLMProvider(response="{{}")
-        dummy_judge = DummyJudge(provider)
+        dummy_judge = LLMJudge(provider)
         dummy_judge.evaluate(
             question="What",
             context="this is context",
@@ -56,7 +56,7 @@ def test_dummy_judge_for_provider_failure_due_invalid_eval():
   }
 }"""
         )
-        dummy_judge = DummyJudge(provider)
+        dummy_judge = LLMJudge(provider)
         dummy_judge.evaluate(
             question="What",
             context="this is context",

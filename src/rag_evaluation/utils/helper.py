@@ -2,20 +2,29 @@ import math
 import statistics
 
 
-def load_builder(
+def load_eval_prompt(
     version: str,
     question: str,
     context: str,
     expected_answer: str,
     generated_answer: str,
 ) -> str:
-    with open(f"src/rag_evaluation/prompts/eval_prompt_{version}.txt", "r+") as f:
+    with open(f"src/rag_evaluation/prompts/evaluation/{version}.txt", "r+") as f:
         return (
             f.read()
             .replace("{##question##}", question)
             .replace("{##context##}", context)
             .replace("{##expected_answer##}", expected_answer)
             .replace("{##generated_answer##}", generated_answer)
+        )
+
+
+def load_generation_prompt(version: str, question: str, context: str) -> str:
+    with open(f"src/rag_evaluation/prompts/generation/{version}.txt", "r+") as f:
+        return (
+            f.read()
+            .replace("{##question##}", question)
+            .replace("{##context##}", context)
         )
 
 

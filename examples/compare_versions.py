@@ -7,9 +7,9 @@ from rag_evaluation.evaluation import (
     EvaluationReportBuilder,
     EvaluationRunner,
 )
-from rag_evaluation.judges.dummy import DummyJudge
+from rag_evaluation.judges.llm import LLMJudge
 from rag_evaluation.models import EvaluationThresholds, SystemOutput
-from rag_evaluation.providers.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation.dummy import DummyLLMProvider
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATASET_PATH = ROOT_DIR / "dataset" / "examples" / "sample_cases.jsonl"
@@ -157,7 +157,7 @@ def main() -> None:
         max_avg_cost_usd=0.005,
     )
 
-    judge = DummyJudge(DummyLLMProvider())
+    judge = LLMJudge(DummyLLMProvider())
     runner = EvaluationRunner(judge=judge)
     report_builder = EvaluationReportBuilder()
 
