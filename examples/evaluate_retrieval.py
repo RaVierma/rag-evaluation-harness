@@ -5,16 +5,13 @@ from typing import Any
 
 from rag_evaluation.chunking.text_chunker import TextChunker
 from rag_evaluation.dataset.loader.text_document_loader import TextDocumentLoader
-from rag_evaluation.embeddings.service import EmbeddingService
+from rag_evaluation.embeddings import EmbeddingService
 from rag_evaluation.evaluation.retrieval import evaluate_retrieval
-from rag_evaluation.models.cases import EvaluationCase
-from rag_evaluation.models.chunks import Chunk, EmbeddedChunk
+from rag_evaluation.models import Chunk, EmbeddedChunk, EvaluationCase
 from rag_evaluation.pipelines.retrieval_pipeline import RetrievalPipeline
-from rag_evaluation.providers.embedding.ollama_com import OllamaEmbeddingProvider
+from rag_evaluation.providers.embedding import OllamaEmbeddingProvider
 from rag_evaluation.reranking.cross_encoder import CrossEncoderReranker
-from rag_evaluation.retriever.bm25 import BM25Retriever
-from rag_evaluation.retriever.hybrid import HybridRetriever
-from rag_evaluation.retriever.in_memory import InMemoryRetriever
+from rag_evaluation.retriever import BM25Retriever, HybridRetriever, InMemoryRetriever
 
 DOCUMENTS_PATH = Path("dataset/documents")
 GOLDEN_DATASET_PATH = Path("dataset/golden.jsonl")

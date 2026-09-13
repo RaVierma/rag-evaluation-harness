@@ -1,5 +1,5 @@
 from rag_evaluation.embeddings.service import EmbeddingService
-from rag_evaluation.models.chunks import RetrievalOutput
+from rag_evaluation.models import RetrievalOutput
 from rag_evaluation.reranking.base import Reranker
 from rag_evaluation.retriever import HybridRetriever
 

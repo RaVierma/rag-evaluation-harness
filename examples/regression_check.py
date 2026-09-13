@@ -2,19 +2,19 @@ from pathlib import Path
 
 from rag_evaluation.dataset import load_evaluation_cases
 from rag_evaluation.evaluation import (
+    EvaluationComparisonBuilder,
     EvaluationDecisionBuilder,
+    EvaluationReportBuilder,
+    EvaluationRunner,
     RegressionDecisionBuilder,
 )
-from rag_evaluation.evaluation.comparison import EvaluationComparisonBuilder
-from rag_evaluation.evaluation.report import EvaluationReportBuilder
-from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges.llm import LLMJudge
+from rag_evaluation.judges import LLMJudge
 from rag_evaluation.models import (
     EvaluationThresholds,
     RegressionThresholds,
     SystemOutput,
 )
-from rag_evaluation.providers.generation.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation import DummyLLMProvider
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATASET_PATH = ROOT_DIR / "dataset" / "examples" / "sample_cases.jsonl"

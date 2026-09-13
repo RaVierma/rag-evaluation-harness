@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.models.chunks import EmbeddedChunk, HybridRetrievedChunk
+from rag_evaluation.models import EmbeddedChunk, HybridRetrievedChunk
 from rag_evaluation.reranking import DummyReranker
 
 
@@ -240,7 +240,7 @@ class TestRerank:
             top_k=4,
         )
 
-        assert [item.chunk.chunk_id for item in result] == [
+        assert [item.chunk.chunk.chunk_id for item in result] == [
             "chunk-b",
             "chunk-a",
             "chunk-c",

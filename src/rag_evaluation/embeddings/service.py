@@ -1,5 +1,5 @@
-from rag_evaluation.embeddings.base import EmbeddingProvider
 from rag_evaluation.models import Chunk, EmbeddedChunk
+from rag_evaluation.providers.embedding import EmbeddingProvider
 
 
 class EmbeddingService:

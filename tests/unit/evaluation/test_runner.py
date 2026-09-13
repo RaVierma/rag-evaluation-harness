@@ -6,9 +6,10 @@ from rag_evaluation.models import (
     EvaluationCase,
     EvaluationCaseCategory,
     GenerationEvaluation,
+    RAGPerformance,
     SystemOutput,
 )
-from rag_evaluation.providers.generation.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation import DummyLLMProvider
 
 provider = DummyLLMProvider()
 judge = LLMJudge(provider)
@@ -20,22 +21,29 @@ def test_evaluation_runner():
         id="case-0001",
         question="What is Rag?",
         expected_answer="Rag is a retrieval augmented generation model.",
-        relevant_document_ids=["A", "B", "C"],
+        relevant_document_ids=["AA", "BB", "CC"],
         category=EvaluationCaseCategory.SIMPLE,
+        relevance_judgments=[],
     )
 
     system_output = SystemOutput(
-        retrieved_document_ids=["A", "X", "C", "Y"],
-        context_document_ids=["A", "C"],
+        retrieved_document_ids=["AA", "XX", "CC", "YY"],
+        context_document_ids=["AA", "CC"],
         context="Rag is a retrieval augmented generation",
         generated_answer="Rag standard for retreival augmented gneration.",
-        latency_ms=0.0,  # dummy
-        input_tokens=15,  # dummy
-        output_tokens=6,  # dummy
-        cost_usd=0.013,  # dummy
     )
 
-    result = eval_runner.evaluate(eval_case, system_output)
+    rag_performance = RAGPerformance(
+        total_latency_ms=100.0,
+        retrieval_latency_ms=20.0,
+        context_latency_ms=5.0,
+        llm_latency_ms=75.0,
+        input_tokens=100,
+        output_tokens=20,
+        cost_usd=0.001,
+    )
+
+    result = eval_runner.evaluate(eval_case, system_output, rag_performance)
 
     assert isinstance(result.generation, GenerationEvaluation)
 

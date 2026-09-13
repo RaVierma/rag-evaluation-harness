@@ -1,6 +1,6 @@
 from ollama import Client
 
-from rag_evaluation.embeddings import EmbeddingProvider
+from .base import EmbeddingProvider
 
 
 class OllamaEmbeddingProvider(EmbeddingProvider):

@@ -1,7 +1,7 @@
 import hashlib
 import math
 
-from rag_evaluation.embeddings import EmbeddingProvider
+from .base import EmbeddingProvider
 
 
 class DummyEmbeddingProvider(EmbeddingProvider):

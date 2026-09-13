@@ -1,8 +1,8 @@
 import pytest
 
-from rag_evaluation.judges.llm import LLMJudge
+from rag_evaluation.judges import LLMJudge
 from rag_evaluation.models import GenerationEvaluation
-from rag_evaluation.providers.generation.dummy import DummyLLMProvider
+from rag_evaluation.providers.generation import DummyLLMProvider
 
 
 def test_dummy_judge_for_success():

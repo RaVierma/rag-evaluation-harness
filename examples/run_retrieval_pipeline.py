@@ -2,14 +2,14 @@ from pathlib import Path
 
 from rag_evaluation.chunking import TextChunker
 from rag_evaluation.dataset import TextDocumentLoader
-from rag_evaluation.embeddings.service import EmbeddingService
-from rag_evaluation.models.chunks import (
+from rag_evaluation.embeddings import EmbeddingService
+from rag_evaluation.models import (
     Chunk,
     EmbeddedChunk,
     RetrievalOutput,
 )
-from rag_evaluation.pipelines.retrieval_pipeline import RetrievalPipeline
-from rag_evaluation.providers.embedding.ollama_com import OllamaEmbeddingProvider
+from rag_evaluation.pipelines import RetrievalPipeline
+from rag_evaluation.providers.embedding import OllamaEmbeddingProvider
 from rag_evaluation.reranking import CrossEncoderReranker
 from rag_evaluation.retriever import BM25Retriever, HybridRetriever, InMemoryRetriever
 

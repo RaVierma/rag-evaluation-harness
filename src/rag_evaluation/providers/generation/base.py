@@ -11,4 +11,5 @@ class LLMProvider(ABC):
         self,
         prompt: str,
         response_schema: type[BaseModel] | None = None,
+        max_output_tokens: int = -1,
     ) -> LLMProviderResult: ...

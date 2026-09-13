@@ -8,6 +8,7 @@ from rag_evaluation.models import (
     GenerationEvaluation,
     SystemOutput,
 )
+from rag_evaluation.models.performance import RAGPerformance
 
 
 class RAGDiagnosis(str, Enum):
@@ -33,6 +34,7 @@ class EvaluationCaseResult(BaseModel):
     # Generation
     generation: GenerationEvaluation
 
+    performance: RAGPerformance
     diagnosis: RAGDiagnosis
 
 

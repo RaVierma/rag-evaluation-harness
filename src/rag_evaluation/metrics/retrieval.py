@@ -7,12 +7,10 @@ def recall_at_k(
         return 0.0
 
     relevant = set(relevant_document_ids)
-    unique_retrieved = list(set(retrieved_document_ids))
-    retrieved = unique_retrieved[:k]
+    retrieved = retrieved_document_ids[:k]
+    unique_retrieved = set(retrieved)
 
-    relevant_retrieved = sum(doc_id in relevant for doc_id in retrieved)
-
-    return relevant_retrieved / len(relevant)
+    return len(relevant & unique_retrieved) / len(relevant)
 
 
 def precision_at_k(

@@ -18,6 +18,7 @@ class OllamaLLMProvider(LLMProvider):
         self,
         prompt: str,
         response_schema: type[BaseModel] | None = None,
+        max_output_tokens: int = -1,
     ) -> LLMProviderResult:
         if not prompt.strip():
             return LLMProviderResult(
@@ -29,7 +30,7 @@ class OllamaLLMProvider(LLMProvider):
             generate_kwargs = {
                 "prompt": prompt,
                 "stream": False,
-                "options": {"temperature": 0.0},
+                "options": {"temperature": 0.0, "num_predict": max_output_tokens},
                 "keep_alive": -1,
             }
 

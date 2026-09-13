@@ -11,11 +11,6 @@ class SystemOutput(BaseModel):
     context: str
     generated_answer: NonEmptyString
 
-    latency_ms: float
-    input_tokens: int
-    output_tokens: int
-    cost_usd: float
-
 
 class LLMProviderErrorType(str, Enum):
     RATE_LIMIT: str = "RATE_LIMIT"

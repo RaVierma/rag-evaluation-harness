@@ -1,5 +1,5 @@
-from rag_evaluation.judges.llm import LLMJudge
-from rag_evaluation.providers.generation.ollama_com import OllamaLLMProvider
+from rag_evaluation.judges import LLMJudge
+from rag_evaluation.providers.generation import OllamaLLMProvider
 
 test_cases = [
     {

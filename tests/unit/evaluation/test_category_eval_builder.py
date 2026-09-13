@@ -4,11 +4,14 @@ import pytest
 
 from rag_evaluation.evaluation.category_report import CategoryEvaluationBuilder
 from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges.llm import LLMJudge
-from rag_evaluation.models import EvaluationCase
-from rag_evaluation.models.cases import EvaluationCaseCategory
-from rag_evaluation.models.outputs import SystemOutput
-from rag_evaluation.providers.generation.dummy import DummyLLMProvider
+from rag_evaluation.judges import LLMJudge
+from rag_evaluation.models import (
+    EvaluationCase,
+    EvaluationCaseCategory,
+    RAGPerformance,
+    SystemOutput,
+)
+from rag_evaluation.providers.generation import DummyLLMProvider
 
 
 @pytest.fixture
@@ -24,7 +27,8 @@ def eval_case_and_results():
             id=f"case-000{i}",
             question="What is Rag?",
             expected_answer="Rag is a retrieval augmented generation model.",
-            relevant_document_ids=["A", "B", "C"],
+            relevant_document_ids=["AA", "BB", "CC"],
+            relevance_judgments=[],
             category=random.choice(
                 [
                     EvaluationCaseCategory.SIMPLE,
@@ -36,20 +40,26 @@ def eval_case_and_results():
 
         cases.append(eval_case)
 
-        retrieved_document_ids = ["A", "X", "C", "Y"]
+        retrieved_document_ids = ["AA", "XX", "CC", "YY"]
         random.shuffle(retrieved_document_ids)
 
         system_output = SystemOutput(
             retrieved_document_ids=retrieved_document_ids,
-            context_document_ids=["A", "C"],
+            context_document_ids=["AA", "CC"],
             context="Rag is a retrieval augmented generation",
             generated_answer="Rag standard for retreival augmented gneration.",
-            latency_ms=random.choice([100, 200, 500, 250]),  # dummy
-            input_tokens=random.choice([50, 100, 60, 70]),  # dummy
-            output_tokens=random.choice([100, 150, 200, 130]),  # dummy
-            cost_usd=random.choice([0.01, 0.02, 0.015]),  # dummy
         )
-        result = eval_runner.evaluate(eval_case, system_output)
+
+        rag_performance = RAGPerformance(
+            total_latency_ms=random.choice([100, 200, 500, 250]),
+            retrieval_latency_ms=20.0,
+            context_latency_ms=5.0,
+            llm_latency_ms=75.0,
+            input_tokens=random.choice([50, 100, 60, 70]),
+            output_tokens=random.choice([100, 150, 200, 130]),
+            cost_usd=random.choice([0.01, 0.02, 0.015]),
+        )
+        result = eval_runner.evaluate(eval_case, system_output, rag_performance)
 
         eval_results.append(result)
 

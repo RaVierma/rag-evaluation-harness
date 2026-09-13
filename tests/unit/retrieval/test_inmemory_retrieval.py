@@ -1,4 +1,4 @@
-from rag_evaluation.models.chunks import EmbeddedChunk
+from rag_evaluation.models import EmbeddedChunk
 from rag_evaluation.retriever import InMemoryRetriever
 
 
@@ -28,7 +28,7 @@ def test_inmemory_retrieval_for_valid_data():
 
     retriever = InMemoryRetriever(chunks)
 
-    retrieval_result = retriever.retrieve(query_embedding, top_k=2)
+    retrieval_result = retriever.retrieve(query_embedding, candidate_k=2)
 
     assert len(retrieval_result) == 2
 

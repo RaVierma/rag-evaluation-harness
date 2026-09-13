@@ -45,10 +45,3 @@ class HybridRetrievedChunk(BaseModel):
 class RerankedChunk(BaseModel):
     chunk: HybridRetrievedChunk
     rerank_score: float
-
-
-class RetrievalOutput(BaseModel):
-    query: str
-    results: list[RerankedChunk]
-    candidate_k: int = Field(gt=0)
-    top_k: int = Field(gt=0)

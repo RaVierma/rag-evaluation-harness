@@ -6,7 +6,12 @@ from rag_evaluation.metrics.retrieval import (
     recall_at_k,
     reciprocal_rank,
 )
-from rag_evaluation.models import EvaluationCase, EvaluationCaseResult, SystemOutput
+from rag_evaluation.models import (
+    EvaluationCase,
+    EvaluationCaseResult,
+    RAGPerformance,
+    SystemOutput,
+)
 
 
 class EvaluationRunner:
@@ -14,7 +19,10 @@ class EvaluationRunner:
         self.judge = judge
 
     def evaluate(
-        self, case: EvaluationCase, system_output: SystemOutput
+        self,
+        case: EvaluationCase,
+        system_output: SystemOutput,
+        rag_performance: RAGPerformance,
     ) -> EvaluationCaseResult:
         recall = recall_at_k(
             case.relevant_document_ids, system_output.retrieved_document_ids, k=20
@@ -59,5 +67,6 @@ class EvaluationRunner:
             context_recall=ctx_recall,
             context_precision=ctx_precision,
             generation=generation,
+            performance=rag_performance,
             diagnosis=diagnosis,
         )

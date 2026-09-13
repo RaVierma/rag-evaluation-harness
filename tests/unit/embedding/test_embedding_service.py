@@ -1,5 +1,6 @@
-from rag_evaluation.embeddings import DummyEmbeddingProvider, EmbeddingService
+from rag_evaluation.embeddings.service import EmbeddingService
 from rag_evaluation.models.chunks import Chunk
+from rag_evaluation.providers.embedding import DummyEmbeddingProvider
 
 embedding_provider = DummyEmbeddingProvider()
 

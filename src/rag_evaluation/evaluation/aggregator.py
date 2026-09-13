@@ -44,22 +44,26 @@ class EvaluationMetricsAggregator:
             )
             / total_cases,
             "avg_latency_ms": sum(
-                eval_case.system_output.latency_ms for eval_case in eval_case_results
+                eval_case.performance.total_latency_ms
+                for eval_case in eval_case_results
             )
             / total_cases,
             "p95_latency_ms": calculate_p95(
-                [eval_case.system_output.latency_ms for eval_case in eval_case_results]
+                [
+                    eval_case.performance.total_latency_ms
+                    for eval_case in eval_case_results
+                ]
             ),
             "avg_input_tokens": sum(
-                eval_case.system_output.input_tokens for eval_case in eval_case_results
+                eval_case.performance.input_tokens for eval_case in eval_case_results
             )
             / total_cases,
             "avg_output_tokens": sum(
-                eval_case.system_output.output_tokens for eval_case in eval_case_results
+                eval_case.performance.output_tokens for eval_case in eval_case_results
             )
             / total_cases,
             "avg_cost_usd": sum(
-                eval_case.system_output.cost_usd for eval_case in eval_case_results
+                eval_case.performance.cost_usd for eval_case in eval_case_results
             )
             / total_cases,
         }

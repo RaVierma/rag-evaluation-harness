@@ -5,7 +5,6 @@ from .chunks import (
     EmbeddedChunk,
     HybridRetrievedChunk,
     RerankedChunk,
-    RetrievalOutput,
     RetrievedChunk,
 )
 from .decisions import (
@@ -25,6 +24,8 @@ from .generation import (
     Score,
 )
 from .outputs import LLMProviderErrorType, LLMProviderResult, SystemOutput
+from .performance import RAGPerformance
+from .pipeline import RAGPipelineResult, RetrievalOutput
 from .reports import (
     CategoryEvaluation,
     CategoryEvaluationReport,
@@ -58,6 +59,7 @@ __all__ = [
     "MetricComparison",
     "MetricDirection",
     "MetricEvaluation",
+    "RAGPerformance",
     "RegressionDecision",
     "RegressionMetric",
     "RegressionThresholds",
@@ -65,6 +67,7 @@ __all__ = [
     "RerankedChunk",
     "RetrievalOutput",
     "RetrievedChunk",
+    "RAGPipelineResult",
     "Score",
     "Section",
     "SystemOutput",

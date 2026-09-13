@@ -11,7 +11,10 @@ class DummyLLMProvider(LLMProvider):
         self.response = response
 
     def call(
-        self, prompt: str, response_schema: type[BaseModel] | None = None
+        self,
+        prompt: str,
+        response_schema: type[BaseModel] | None = None,
+        max_output_tokens: int = -1,
     ) -> LLMProviderResult:
         response = (
             json.dumps(

@@ -1,9 +1,7 @@
 import re
 
-from rag_evaluation.chunking import Chunker
-from rag_evaluation.models import Chunk, Document
-from rag_evaluation.models.chunks import ChunkMetaData
-from rag_evaluation.models.documents import Section
+from .base import Chunker
+from rag_evaluation.models import Chunk, Document, ChunkMetaData, Section
 
 HEADING_PATTERN = re.compile(r"^#{1,6}\s+(.+?)\s*$")
 SENTENCE_PATTERN = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9])")
