@@ -2,16 +2,16 @@ import random
 
 import pytest
 
-from rag_evaluation.evaluation.category_report import CategoryEvaluationBuilder
-from rag_evaluation.evaluation.runner import EvaluationRunner
-from rag_evaluation.judges import LLMJudge
-from rag_evaluation.models import (
+from evaluation.category_report import CategoryEvaluationBuilder
+from evaluation.judges import LLMJudge
+from evaluation.models.cases import (
     EvaluationCase,
     EvaluationCaseCategory,
-    RAGPerformance,
-    SystemOutput,
 )
-from rag_evaluation.providers.generation import DummyLLMProvider
+from evaluation.runner import EvaluationRunner
+from rag.models.outputs import SystemOutput
+from rag.models.performance import RAGPerformance
+from rag.providers.generation import DummyLLMProvider
 
 
 @pytest.fixture

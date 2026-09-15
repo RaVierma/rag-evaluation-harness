@@ -1,5 +1,5 @@
-from rag_evaluation.chunking import TextChunker
-from rag_evaluation.models.documents import Document, MetaData
+from rag.chunking import TextChunker
+from rag.models.documents import Document, MetaData
 
 
 def create_document(content: str) -> Document:

@@ -1,8 +1,8 @@
-from rag_evaluation.evaluation.release import ReleaseStatus, determine_release_status
-from rag_evaluation.models import (
+from evaluation.models.decisions import (
     EvaluationDecision,
     RegressionDecision,
 )
+from evaluation.release import ReleaseStatus, determine_release_status
 
 
 def test_release_when_quality_and_regression_gates_pass() -> None:

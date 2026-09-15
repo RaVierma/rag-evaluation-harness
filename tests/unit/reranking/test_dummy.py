@@ -1,7 +1,7 @@
 import pytest
 
-from rag_evaluation.models import EmbeddedChunk, HybridRetrievedChunk
-from rag_evaluation.reranking import DummyReranker
+from rag.models.chunks import EmbeddedChunk, HybridRetrievedChunk
+from rag.reranking import DummyReranker
 
 
 @pytest.fixture

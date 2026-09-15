@@ -1,5 +1,6 @@
-from rag_evaluation.evaluation.regression_gate import RegressionDecisionBuilder
-from rag_evaluation.models import MetricComparison, RegressionThresholds
+from evaluation.models.decisions import RegressionThresholds
+from evaluation.models.reports import MetricComparison
+from evaluation.regression_gate import RegressionDecisionBuilder
 
 
 def test_regression_for_allowed_limit():

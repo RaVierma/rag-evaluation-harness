@@ -360,7 +360,7 @@ The evaluation package provides a loader:
 ```python
 from pathlib import Path
 
-from rag_evaluation.dataset import load_evaluation_cases
+from evaluation.dataset.loader import load_evaluation_cases
 
 cases = load_evaluation_cases(Path("dataset/golden.jsonl"))
 ```

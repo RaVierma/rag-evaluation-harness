@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.providers.embedding import DummyEmbeddingProvider
+from rag.providers.embedding import DummyEmbeddingProvider
 
 embedding_provider = DummyEmbeddingProvider()
 

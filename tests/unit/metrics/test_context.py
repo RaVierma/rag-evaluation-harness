@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.metrics.context import context_precision, context_recall
+from evaluation.metrics.context import context_precision, context_recall
 
 
 # Context Recall Test

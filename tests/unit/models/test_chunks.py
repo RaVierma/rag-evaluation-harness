@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from rag_evaluation.models import Chunk, ChunkMetaData
+from rag.models.chunks import Chunk, ChunkMetaData
 
 
 def test_chunk_model_for_valid_data():

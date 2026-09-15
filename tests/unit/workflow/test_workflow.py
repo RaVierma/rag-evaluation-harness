@@ -2,27 +2,27 @@ from unittest.mock import Mock
 
 import pytest
 
-from rag_evaluation.evaluation.workflow import EvaluationWorkflow
-from rag_evaluation.models import (
+from evaluation.models.cases import (
     EvaluationCase,
     EvaluationCaseCategory,
-    EvaluationComparison,
+    RelevanceJudgment,
+)
+from evaluation.models.decisions import (
     EvaluationDecision,
     EvaluationThresholds,
-    GenerationEvaluation,
-    MetricDirection,
-    RelevanceJudgment,
     RegressionDecision,
     RegressionThresholds,
-    SystemOutput,
 )
-from rag_evaluation.models.generation import MetricEvaluation
-from rag_evaluation.models.performance import RAGPerformance
-from rag_evaluation.models.reports import (
+from evaluation.models.generation import GenerationEvaluation, MetricEvaluation
+from evaluation.models.reports import (
     EvaluationCaseResult,
+    EvaluationComparison,
     RAGDiagnosis,
 )
-from rag_evaluation.models.pipeline import RAGPipelineResult
+from evaluation.workflow import EvaluationWorkflow
+from rag.models.outputs import SystemOutput
+from rag.models.performance import RAGPerformance
+from rag.models.pipeline import RAGPipelineResult
 
 
 def _make_case(case_id: str = "case-001") -> EvaluationCase:

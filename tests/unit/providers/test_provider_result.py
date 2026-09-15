@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.models.outputs import LLMProviderErrorType, LLMProviderResult
+from rag.models.outputs import LLMProviderErrorType, LLMProviderResult
 
 
 def test_LLMProviderResult_for_success_with_conent():

@@ -1,6 +1,6 @@
-from rag_evaluation.evaluation.comparison import EvaluationComparisonBuilder
-from rag_evaluation.models import EvaluationDecision, EvaluationReport
-from rag_evaluation.utils.helper import calculate_percentage_delta
+from evaluation.comparison import EvaluationComparisonBuilder
+from evaluation.models.decisions import EvaluationDecision
+from evaluation.models.reports import EvaluationReport
 
 
 def test_eval_comparision_for_all_metrics_compared():
@@ -53,20 +53,26 @@ def test_eval_comparision_for_all_metrics_compared():
 
     for metric_comp in result.metric_comparisons:
         if metric_comp.name == "retrieval_recall":
-            assert metric_comp.percentage_delta == calculate_percentage_delta(
-                0.88, 0.97
+            assert (
+                metric_comp.percentage_delta
+                == comparison_builder._calculate_percentage_delta(0.88, 0.97)
             )
 
         if metric_comp.name == "context_precision":
-            assert metric_comp.percentage_delta == calculate_percentage_delta(
-                0.94, 0.89
+            assert (
+                metric_comp.percentage_delta
+                == comparison_builder._calculate_percentage_delta(0.94, 0.89)
             )
 
         if metric_comp.name == "relevance":
-            assert metric_comp.percentage_delta == calculate_percentage_delta(0.90, 0.0)
+            assert (
+                metric_comp.percentage_delta
+                == comparison_builder._calculate_percentage_delta(0.90, 0.0)
+            )
 
         if metric_comp.name == "avg_latency_ms":
             assert metric_comp.absolute_delta == 0
-            assert metric_comp.percentage_delta == calculate_percentage_delta(
-                4000, 4000
+            assert (
+                metric_comp.percentage_delta
+                == comparison_builder._calculate_percentage_delta(4000, 4000)
             )

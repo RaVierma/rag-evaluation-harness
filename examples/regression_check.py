@@ -1,58 +1,76 @@
 from pathlib import Path
 
-from rag_evaluation.dataset import load_evaluation_cases
-from rag_evaluation.evaluation import (
+from evaluation import (
     EvaluationComparisonBuilder,
     EvaluationDecisionBuilder,
     EvaluationReportBuilder,
     EvaluationRunner,
     RegressionDecisionBuilder,
 )
-from rag_evaluation.judges import LLMJudge
-from rag_evaluation.models import (
+from evaluation.dataset.loader import load_evaluation_cases
+from evaluation.judges import LLMJudge
+from evaluation.models.decisions import (
     EvaluationThresholds,
     RegressionThresholds,
-    SystemOutput,
 )
-from rag_evaluation.providers.generation import DummyLLMProvider
+from rag.models.outputs import SystemOutput
+from rag.models.performance import RAGPerformance
+from rag.models.pipeline import RAGPipelineResult
+from rag.providers.generation import DummyLLMProvider
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATASET_PATH = ROOT_DIR / "dataset" / "examples" / "sample_cases.jsonl"
 
 
-def build_v1_output(case) -> SystemOutput:
+def build_v1_output(case) -> RAGPipelineResult:
     outputs = {
-        "case-001": SystemOutput(
+        "case-001": RAGPipelineResult(
+            output=SystemOutput(
             retrieved_document_ids=["doc-001"],
             context_document_ids=["doc-001"],
             context="Employees may work remotely up to three days per week with manager approval.",
             generated_answer="Employees may work remotely up to three days per week with manager approval.",
-            latency_ms=420,
+        ),
+        performance=RAGPerformance(
+            total_latency_ms=445.0,
+            retrieval_latency_ms=20.0,
+            context_latency_ms=5.0,
+            llm_latency_ms=420,
             input_tokens=350,
             output_tokens=24,
             cost_usd=0.0012,
-        ),
-        "case-003": SystemOutput(
+        )),
+        "case-003": RAGPipelineResult(output=SystemOutput(
             retrieved_document_ids=["doc-003"],
             context_document_ids=["doc-003"],
             context="Employees may carry forward up to five unused vacation days.",
             generated_answer="Employees can carry forward up to five unused vacation days.",
-            latency_ms=600,
-            input_tokens=400,
-            output_tokens=18,
-            cost_usd=0.0017,
         ),
-        "case-006": SystemOutput(
+        performance=RAGPerformance(
+                    total_latency_ms=627,
+                    retrieval_latency_ms=22.0,
+                    context_latency_ms=5.0,
+                    llm_latency_ms=600,
+                    input_tokens=400,
+                    output_tokens=18,
+                    cost_usd=0.0017,
+                )),
+        "case-006": RAGPipelineResult(output=SystemOutput(
             retrieved_document_ids=[],
             context_document_ids=[],
             context="",
             generated_answer="There is no information about cryptocurrency reimbursement.",
-            latency_ms=310,
-            input_tokens=180,
-            output_tokens=12,
-            cost_usd=0.0008,
         ),
-        "case-010": SystemOutput(
+        performance=RAGPerformance(
+                            total_latency_ms=345.0,
+                            retrieval_latency_ms=25.0,
+                            context_latency_ms=5.0,
+                            llm_latency_ms=310,
+                            input_tokens=180,
+                            output_tokens=12,
+                            cost_usd=0.0008,
+                        )),
+        "case-010": RAGPipelineResult(output=SystemOutput(
             retrieved_document_ids=["doc-011"],
             context_document_ids=["doc-011"],
             context="Passwords and credentials must be treated as confidential.",
@@ -61,25 +79,38 @@ def build_v1_output(case) -> SystemOutput:
             input_tokens=300,
             output_tokens=12,
             cost_usd=0.0011,
-        ),
+        ), performance=RAGPerformance(
+                            total_latency_ms=424.0,
+                            retrieval_latency_ms=29.0,
+                            context_latency_ms=5.0,
+                            llm_latency_ms=390,
+                            input_tokens=300,
+                            output_tokens=12,
+                            cost_usd=0.0011,
+                        ))
     }
 
     return outputs[case.id]
 
 
-def build_v2_output(case) -> SystemOutput:
+def build_v2_output(case) -> RAGPipelineResult:
     outputs = {
-        "case-001": SystemOutput(
+        "case-001": RAGPipelineResult(output= SystemOutput(
             retrieved_document_ids=["doc-001"],
             context_document_ids=["doc-001"],
             context="Employees may work remotely up to three days per week with manager approval.",
             generated_answer="Employees may work remotely up to three days per week with manager approval.",
-            latency_ms=400,
-            input_tokens=330,
-            output_tokens=24,
-            cost_usd=0.0011,
-        ),
-        "case-003": SystemOutput(
+        ), performance=RAGPerformance(
+            total_latency_ms=430.0,
+                                        retrieval_latency_ms=20.0,
+                                        context_latency_ms=5.0,
+                                        llm_latency_ms=400,
+                                        input_tokens=330,
+                                        output_tokens=24,
+                                        cost_usd=0.0011,
+        )),
+        "case-003": RAGPipelineResult(
+            output=SystemOutput(
             retrieved_document_ids=["doc-003", "doc-004"],
             context_document_ids=["doc-003", "doc-004"],
             context=(
@@ -93,12 +124,16 @@ def build_v2_output(case) -> SystemOutput:
                 "when business circumstances prevented the employee from "
                 "taking approved leave."
             ),
-            latency_ms=720,
-            input_tokens=550,
-            output_tokens=48,
-            cost_usd=0.0024,
-        ),
-        "case-006": SystemOutput(
+        ), performance=RAGPerformance(
+            total_latency_ms=755.0,
+                                        retrieval_latency_ms=30.0,
+                                        context_latency_ms=5.0,
+                                        llm_latency_ms=720,
+                                        input_tokens=550,
+                                        output_tokens=48,
+                                        cost_usd=0.0024,
+        )),
+        "case-006": RAGPipelineResult(output=SystemOutput(
             retrieved_document_ids=[],
             context_document_ids=[],
             context="",
@@ -106,12 +141,16 @@ def build_v2_output(case) -> SystemOutput:
                 "The available policy documents do not specify a "
                 "cryptocurrency reimbursement policy."
             ),
-            latency_ms=300,
-            input_tokens=170,
-            output_tokens=19,
-            cost_usd=0.0008,
-        ),
-        "case-010": SystemOutput(
+        ), performance=RAGPerformance(
+            total_latency_ms=325.0,
+                                        retrieval_latency_ms=20.0,
+                                        context_latency_ms=5.0,
+                                        llm_latency_ms=300,
+                                        input_tokens=300,
+                                        output_tokens=19,
+                                        cost_usd=0.0008,
+        )),
+        "case-010": RAGPipelineResult(output=SystemOutput(
             retrieved_document_ids=["doc-011"],
             context_document_ids=["doc-011"],
             context="Passwords and credentials must be treated as confidential.",
@@ -119,11 +158,15 @@ def build_v2_output(case) -> SystemOutput:
                 "I can't provide an administrator password. Credentials "
                 "must not be exposed or shared."
             ),
-            latency_ms=380,
-            input_tokens=290,
-            output_tokens=20,
-            cost_usd=0.0010,
-        ),
+        ),performance=RAGPerformance(
+            total_latency_ms=406.0,
+                                        retrieval_latency_ms=21.0,
+                                        context_latency_ms=5.0,
+                                        llm_latency_ms=380,
+                                        input_tokens=290,
+                                        output_tokens=20,
+                                        cost_usd=0.0010,
+        )),
     }
 
     return outputs[case.id]
@@ -133,8 +176,8 @@ def build_report(cases, output_builder, runner, report_builder):
     results = []
 
     for case in cases:
-        output = output_builder(case)
-        results.append(runner.evaluate(case, output))
+        ragpipeline_result = output_builder(case)
+        results.append(runner.evaluate(case, ragpipeline_result.output, ragpipeline_result.performance))
 
     return report_builder.build(results)
 
@@ -212,15 +255,15 @@ def main() -> None:
     print("====================")
 
     for metric in regression_decision.passed:
-        print(f"PASS  {metric.name}")
+        print(f" ✓ PASS  {metric.name}")
 
     for metric in regression_decision.failures:
-        print(f"FAIL  {metric.name}")
+        print(f" ✗ FAIL  {metric.name}")
 
     print("\n--------------------")
     print(
         "Overall:",
-        "PASS" if regression_decision.is_passed else "FAIL",
+        " ✓ PASS" if regression_decision.is_passed else "✗ FAIL",
     )
 
 

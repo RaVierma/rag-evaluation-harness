@@ -2,12 +2,12 @@ from unittest.mock import Mock
 
 import pytest
 
-from rag_evaluation.models import (
+from rag.models.chunks import (
     EmbeddedChunk,
     HybridRetrievedChunk,
     RerankedChunk,
 )
-from rag_evaluation.pipelines import RetrievalPipeline
+from rag.pipelines import RetrievalPipeline
 
 
 def make_reranked_chunk(chunk_id: str) -> RerankedChunk:

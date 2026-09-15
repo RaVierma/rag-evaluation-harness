@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from rag_evaluation.dataset import TextDocumentLoader
+from rag.ingestion import TextDocumentLoader
 
 
 def test_text_document_loader():

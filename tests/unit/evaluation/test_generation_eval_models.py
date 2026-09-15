@@ -1,7 +1,11 @@
 import pytest
 from pydantic import ValidationError
 
-from rag_evaluation.models import Evidence, GenerationEvaluation, MetricEvaluation
+from evaluation.models.generation import (
+    Evidence,
+    GenerationEvaluation,
+    MetricEvaluation,
+)
 
 
 def test_generation_eval_model_for_all_input_valid():

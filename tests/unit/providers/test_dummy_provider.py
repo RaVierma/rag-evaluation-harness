@@ -1,5 +1,5 @@
-from rag_evaluation.models.outputs import LLMProviderErrorType
-from rag_evaluation.providers.generation.dummy import DummyLLMProvider
+from rag.models.outputs import LLMProviderErrorType
+from rag.providers.generation.dummy import DummyLLMProvider
 
 
 def test_dummy_llm_provider_for_success():

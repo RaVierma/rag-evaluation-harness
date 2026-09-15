@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from rag_evaluation.models import Document, MetaData
+from rag.models.documents import Document, MetaData
 
 
 def test_document_creation():

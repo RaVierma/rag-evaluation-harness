@@ -1,5 +1,5 @@
-from rag_evaluation.models import EmbeddedChunk
-from rag_evaluation.retriever import InMemoryRetriever
+from rag.models.chunks import EmbeddedChunk
+from rag.retriever import InMemoryRetriever
 
 
 def test_inmemory_retrieval_for_valid_data():

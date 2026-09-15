@@ -1,38 +1,37 @@
 from dataclasses import dataclass
-from enum import Enum
 from pathlib import Path
 
 from tqdm import tqdm
 
-from rag_evaluation.chunking import TextChunker
-from rag_evaluation.context.builder import ContextBuilder
-from rag_evaluation.dataset.loader.text_document_loader import TextDocumentLoader
-from rag_evaluation.embeddings import EmbeddingService
-from rag_evaluation.evaluation import (
-    EvaluationRunner,
-    EvaluationWorkflow,
+from evaluation import (
     EvaluationComparisonBuilder,
     EvaluationDecisionBuilder,
+    EvaluationRunner,
+    EvaluationWorkflow,
     RegressionDecisionBuilder,
+    ReleaseStatus,
+    determine_release_status,
 )
-from rag_evaluation.evaluation import ReleaseStatus, determine_release_status
-from rag_evaluation.judges import LLMJudge
-from rag_evaluation.models import (
-    Chunk,
-    EmbeddedChunk,
-    EvaluationCase,
-    RAGPipelineResult,
+from evaluation.judges import LLMJudge
+from evaluation.models.cases import EvaluationCase
+from evaluation.models.decisions import (
     EvaluationDecision,
     EvaluationThresholds,
     RegressionDecision,
     RegressionThresholds,
-    EvaluationReport,
 )
-from rag_evaluation.pipelines import RAGPipeline, RetrievalPipeline
-from rag_evaluation.providers.embedding import OllamaEmbeddingProvider
-from rag_evaluation.providers.generation import OllamaLLMProvider
-from rag_evaluation.reranking.cross_encoder import CrossEncoderReranker
-from rag_evaluation.retriever import (
+from evaluation.models.reports import EvaluationReport
+from rag.chunking import TextChunker
+from rag.context.builder import ContextBuilder
+from rag.embeddings import EmbeddingService
+from rag.ingestion.loader.text_document_loader import TextDocumentLoader
+from rag.models.chunks import Chunk, EmbeddedChunk
+from rag.models.pipeline import RAGPipelineResult
+from rag.pipelines import RAGPipeline, RetrievalPipeline
+from rag.providers.embedding import OllamaEmbeddingProvider
+from rag.providers.generation import OllamaLLMProvider
+from rag.reranking.cross_encoder import CrossEncoderReranker
+from rag.retriever import (
     BM25Retriever,
     HybridRetriever,
     InMemoryRetriever,

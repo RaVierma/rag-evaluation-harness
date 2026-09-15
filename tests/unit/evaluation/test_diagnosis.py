@@ -1,4 +1,4 @@
-from rag_evaluation.evaluation.diagnosis import RAGDiagnosis, diagnose
+from evaluation.diagnosis import RAGDiagnosis, diagnose
 
 
 def test_diagnose_pass():

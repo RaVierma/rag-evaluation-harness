@@ -1,7 +1,8 @@
 import pytest
 
-from rag_evaluation.evaluation.quality_gate import EvaluationDecisionBuilder
-from rag_evaluation.models import EvaluationReport, EvaluationThresholds
+from evaluation.models.decisions import EvaluationThresholds
+from evaluation.models.reports import EvaluationReport
+from evaluation.quality_gate import EvaluationDecisionBuilder
 
 
 @pytest.fixture

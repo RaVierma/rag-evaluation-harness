@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.metrics.ndcg import ndcg_at_k
+from evaluation.metrics.ndcg import ndcg_at_k
 
 
 def test_ndcg_at_k_for_pefect_ranking():

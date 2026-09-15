@@ -1,6 +1,6 @@
 import pytest
 
-from rag_evaluation.metrics.retrieval import (
+from evaluation.metrics.retrieval import (
     mean_reciprocal_rank,
     precision_at_k,
     recall_at_k,
