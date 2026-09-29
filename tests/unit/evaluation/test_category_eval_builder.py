@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from evaluation.category_report import CategoryEvaluationBuilder
+from evaluation.reporting.category_report import CategoryEvaluationBuilder
 from evaluation.judges import LLMJudge
 from evaluation.models.cases import (
     EvaluationCase,

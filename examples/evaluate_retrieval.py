@@ -3,8 +3,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from evaluation.models.cases import EvaluationCase
 from evaluation.retrieval import evaluate_retrieval
+from evaluation.models.cases import EvaluationCase
 from rag.chunking.text_chunker import TextChunker
 from rag.embeddings import EmbeddingService
 from rag.ingestion.loader.text_document_loader import TextDocumentLoader

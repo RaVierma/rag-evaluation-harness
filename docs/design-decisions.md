@@ -5,21 +5,30 @@
 The evaluation framework is separated from the RAG runtime.
 
 ```text
-rag/
-  ↓
-RAGPipelineResult
-  ↓
-evaluation/
+RAG Runtime
+
+    ↓
+
+RAG Outputs / Results
+
+    ↓
+
+Evaluation
 ```
 
 **Reason:** This allows the same evaluation framework to evaluate:
 
 ```text
 RAG v1
+
 RAG v2
+
 Different embedding models
+
 Different rerankers
+
 Different LLMs
+
 Different retrieval strategies
 ```
 
@@ -33,9 +42,13 @@ without coupling evaluation logic to RAG implementation details.
 
 ```text
 RAG Pipeline
+
      ↓
+
 RAGPerformance
+
      ↓
+
 Evaluation
 ```
 
@@ -67,11 +80,15 @@ Keep these decisions separate.
 
 ```text
 Quality Gate
+
     ↓
+
 "Is this version good enough?"
 
 Regression Gate
+
     ↓
+
 "Did this version degrade compared with the baseline?"
 ```
 
@@ -85,6 +102,7 @@ Only genuinely cross-domain primitives belong in `common/`.
 
 ```text
 common/
+
 └── types.py
 ```
 
@@ -98,13 +116,36 @@ The repository uses explicit ownership:
 
 ```text
 rag/
+
     RAG execution
 
 evaluation/
-    Measurement and release decisions
+
+    Measurement, diagnosis, reporting, and release decisions
 
 common/
+
     Shared primitives only
 ```
 
 **Reason:** Clear ownership makes the codebase easier to understand, test, extend, and evolve without unnecessary abstractions.
+
+---
+
+## Decision 7 — Preserve evaluation evidence as an Artifact
+
+Evaluation results are preserved as a structured Artifact rather than treated as temporary output.
+
+```text
+Evaluation Run
+
+     ↓
+
+Evaluation Artifact
+
+     ↓
+
+Comparison / Gates
+```
+
+**Reason:** A stable Artifact allows evaluation results to be inspected, compared, reproduced, and consumed by downstream quality and regression decisions.

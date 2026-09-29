@@ -1,6 +1,6 @@
 from evaluation.metrics.retrieval import recall_at_k, reciprocal_rank
-from evaluation.models.cases import EvaluationCase
 from evaluation.relevance import evaluate_ranking
+from evaluation.models.cases import EvaluationCase
 from rag.models.pipeline import RetrievalOutput
 
 

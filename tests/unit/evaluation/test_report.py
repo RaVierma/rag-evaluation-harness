@@ -4,7 +4,7 @@ import pytest
 
 from evaluation.judges.llm import LLMJudge
 from evaluation.models.cases import EvaluationCase, EvaluationCaseCategory
-from evaluation.report import EvaluationReportBuilder
+from evaluation.reporting.report import EvaluationReportBuilder
 from evaluation.runner import EvaluationRunner
 from rag.models.outputs import SystemOutput
 from rag.models.performance import RAGPerformance

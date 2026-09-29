@@ -4,33 +4,42 @@
 
 ```text
                  RAG Evaluation Harness
+
                          │
+
             ┌────────────┴────────────┐
             │                         │
             ▼                         ▼
          `rag/`                 `evaluation/`
        RAG Runtime               Evaluation
             │                         │
-     ┌──────┼──────┐          ┌───────┼────────┐
-     │      │      │          │       │        │
- Ingestion Retrieval  LLM   Metrics  Judges   Gates
-     │      │      │          │       │        │
-     └──────┴──────┘          └───────┴────────┘
+     ┌──────┼──────┐          ┌───────┼──────────┐
+     │      │      │          │       │          │
+ Ingestion Retrieval  LLM   Metrics  Judges   Reporting
+     │      │      │          │       │          │
+     └──────┴──────┘          └───────┴──────────┘
             │                         │
             ▼                         ▼
-      RAGPipelineResult        EvaluationReport
-                    \             /
-                     ▼           ▼
-                       Comparison
-                           │
-                           ▼
-                    Release Decision
+      RAG System Output       Evaluation Results
+                                      │
+                                      ▼
+                              Evaluation Artifact
+                                      │
+                              ┌───────┴────────┐
+                              │                │
+                              ▼                ▼
+                         Comparison          Gates
+                              │                │
+                              └───────┬────────┘
+                                      ▼
+                               Release Decision
 ```
 
 ## Package Structure
 
 ```text
 src/
+
 ├── common/
 │   └── types.py
 │
@@ -50,8 +59,11 @@ src/
     ├── dataset/
     ├── metrics/
     ├── judges/
-    ├── models/
-    ├── prompts/
+    ├── reporting/
+    ├── artifact/
+    ├── retrieval.py
+    ├── relevance.py
+    ├── diagnostics.py
     ├── aggregator.py
     ├── comparison.py
     ├── quality_gate.py
@@ -79,10 +91,13 @@ Owns the RAG runtime:
 
 Owns evaluation and release decisions:
 
-* retrieval/context metrics
-* generation evaluation
+* retrieval and ranking evaluation
+* evaluation metrics
+* context and generation evaluation
 * LLM judges
+* diagnostics
 * evaluation reports
+* evaluation artifacts
 * version comparison
 * quality gates
 * regression gates
@@ -94,15 +109,16 @@ Contains only genuinely shared primitives. It should remain intentionally small.
 
 ## Key Boundary
 
-> **RAG executes. Evaluation measures and decides.**
+> **RAG executes. Evaluation measures, interprets, and decides.**
 
-The RAG layer should not depend on evaluation logic. Evaluation can consume RAG results to measure quality, performance, regressions, and release readiness.
+The RAG layer should not depend on evaluation logic. Evaluation consumes RAG results to measure quality and performance, diagnose results, compare versions, preserve evidence, and determine release decisions.
 
 ## Design Principles
 
 * Clear domain ownership
 * Minimal shared code
 * Measurable quality and performance
-* Explicit quality/regression gates
+* Explicit quality and regression gates
 * Evidence-based release decisions
+* Preserve evaluation results as structured artifacts
 * Avoid unnecessary abstraction and over-engineering
